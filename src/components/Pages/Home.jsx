@@ -10,16 +10,25 @@ const Home = () => {
             "url(https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg)",
         }}
       >
-        <div className="hero-overlay bg-opacity-60"></div>
+        <div className="hero-overlay bg-opacity-95 "></div>
         <div className="hero-content text-center text-neutral-content">
-          <div className="max-w-md">
-            <h1 className="mb-5 text-5xl font-bold">Hello there</h1>
-            <p className="mb-5">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p>
-            <button className="btn btn-primary">Get Started</button>
+          <div className="text-white">
+            <h1 className="mb-5 text-5xl font-bold">
+              I Grow By Helping People In Need
+            </h1>
+
+            <div className="join ">
+              <div>
+                <input
+                  type="text"
+                  placeholder="Type here"
+                  className="input input-bordered input-accent join-item w-full max-w-xs"
+                />
+              </div>
+              <div>
+                <button className="btn join-item input-accent">Search</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
