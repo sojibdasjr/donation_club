@@ -5,3 +5,7 @@
 body {
   font-family: "Josefin Sans", sans-serif;
 }
+
+header {
+  z-index: 10001 !important;
+}

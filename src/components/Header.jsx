@@ -1,69 +1,121 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import log from "../../public/donation-box.png";
+import logo from "../assets/donation-box.png";
+//React icon
+import { FaXmark, FaBars } from "react-icons/fa6";
 
 const Header = () => {
-  const links = (
-    <>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSticky, setIsSticky] = useState(false);
+  // set toggleMenu
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  useEffect(() => {
+    const handleSticky = () => {
+      if (window.scrollY > 100) {
+        setIsSticky(true);
+      } else {
+        setIsSticky(false);
+      }
+    };
 
-      <li>
-        <NavLink to="/donation">Donation</NavLink>
-      </li>
-      <li>
-        <NavLink to="/statistics">Statistics</NavLink>
-      </li>
-      <li>
-        <NavLink to="/contact">Contact</NavLink>
-      </li>
-    </>
-  );
+    window.addEventListener("scroll", handleSticky);
+
+    return () => {
+      window.addEventListener("scroll", handleSticky);
+    };
+  });
+  // navbar item
+  const navItems = [
+    { page: "Home", path: "/" },
+    { page: "Contact", path: "/contact" },
+    { page: "About", path: "/about" },
+    { page: "Service", path: "/service" },
+  ];
   return (
-    <div>
-      <div className="navbar bg-base-100 max-w-7xl mx-auto">
-        <div className="navbar">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+    <header className="w-full bg-blue-400 md:bg-opacity-15 fixed top-0 left-0 right-0 ">
+      <nav
+        className={`py-4 lg:px-14 px-4  ${
+          isSticky
+            ? "static top-0 left-0 right-0 border-b backdrop-filter backdrop-blur-md  text-white shadow-lg duration-300"
+            : ""
+        }`}
+      >
+        <div className="flex justify-between items-center text-base gap-8">
+          <Link
+            to="#"
+            className="text-2xl font-semibold flex items-center space-x-3"
+          >
+            <img src={logo} alt="" className="w-10 inline-block items-center" />{" "}
+            <span className="text-red-600">BookBazer</span>
+          </Link>
+
+          {/* Nav items for large devices  */}
+          <ul className="md:flex space-x-12 hidden">
+            {navItems.map(({ page, path }) => (
+              <NavLink
+                to={path}
+                spy={true}
+                smooth={true}
+                offset={-100}
+                key={path}
+                className="  rounded block text-black hover:text-red-400 focus:font-bold focus:text-red-600 "
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+                {page}
+              </NavLink>
+            ))}
+          </ul>
+
+          {/* btn for large device // if you dont want just comment btn div */}
+          {/* <div className="space-x-12 hidden lg:flex items-center">
+          <Link
+            to="/"
+            className="hidden lg:flex items-center text-brandPrimary hover:text-grey900"
+          >
+            Login
+          </Link>
+          <button className="bg-brandPrimary text-white py-2 px-4 transition-all duration-300 rounded hover:bg-neutralDGrey">
+            SignUp
+          </button>
+        </div> */}
+
+          {/* menu btn for only mobile device */}
+          <div className="md:hidden">
+            <button
+              onClick={toggleMenu}
+              className="text-black focus:outline-none focus:text-gray-500"
             >
-              {links}
-            </ul>
-          </div>
-          {/* logo */}
-          <div className="flex items-center justify-between">
-            <img className="w-14" src={log} alt="" />
-            <div>
-              <Link to="/" className="text-3xl uppercase font-bold">
-                Donation
-              </Link>
-              <small className=" block tracking-widest ">Campaign</small>
-            </div>
+              {isMenuOpen ? (
+                <FaXmark className="h-6 w-6" />
+              ) : (
+                <FaBars className="h-6 w-6" />
+              )}
+            </button>
           </div>
         </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{links}</ul>
+
+        {/* Nav item for mobile device */}
+        <div
+          className={`space-y-4 px-4 mt-16 py-7  bg-slate-400 ${
+            isMenuOpen ? " fixed top-0 right-0 left-0" : "hidden"
+          }`}
+        >
+          {navItems.map(({ page, path }) => (
+            <NavLink
+              to={path}
+              spy={true}
+              smooth={true}
+              offset={-100}
+              key={path}
+              className=" block text-gray-900 hover:text-white first:font-medium"
+            >
+              {page}
+            </NavLink>
+          ))}
         </div>
-      </div>
-    </div>
+      </nav>
+    </header>
   );
 };
 
